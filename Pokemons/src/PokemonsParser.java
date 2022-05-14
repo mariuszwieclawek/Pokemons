@@ -35,19 +35,20 @@ public class PokemonsParser {
     public static void GetPokeInfo(Pokemons pok, String PokeIDorName) throws IOException, JSONException {
 
         JSONObject json = readJsonFromUrl("https://pokeapi.co/api/v2/pokemon/"+PokeIDorName+"/");
-        pok.PokeID = json.getInt("id");
-        pok.PokeName = json.getString("name");
-        pok.PokeAbilityName = json.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").getString("name");
-        pok.PokeType = json.getJSONArray("types").getJSONObject(0).getJSONObject("type").getString("name");
+        pok.setPokeID(json.getInt("id"));
+        pok.setPokeName(json.getString("name"));
+        pok.setPokeType(json.getJSONArray("types").getJSONObject(0).getJSONObject("type").getString("name"));
+        pok.setPokeAbilityName(json.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").getString("name"));
 
-        json = readJsonFromUrl("https://pokeapi.co/api/v2/ability/"+pok.PokeID+"/");
+
+        json = readJsonFromUrl("https://pokeapi.co/api/v2/ability/"+pok.getPokeID()+"/");
         String text = json.getJSONArray("effect_entries").getJSONObject(1).getString("effect");
         text = text.replaceAll("\n", "");
-        pok.PokeAbilityDesricption = text;
+        pok.setPokeAbilityDesricption(text);
 
-        json = readJsonFromUrl("https://pokeapi.co/api/v2/evolution-chain/"+pok.PokeID+"/");
+        /*json = readJsonFromUrl("https://pokeapi.co/api/v2/evolution-chain/"+pok.getPokeID()+"/");
         pok.FirstEvolution = json.getJSONObject("chain").getJSONArray("evolves_to").getJSONObject(0).getJSONObject("species").getString("name");
         pok.SecondEvolution = json.getJSONObject("chain").getJSONArray("evolves_to").getJSONObject(0).getJSONArray("evolves_to").getJSONObject(0).getJSONObject("species").getString("name");
-
+        */
     }
 }
