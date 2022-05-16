@@ -1,9 +1,12 @@
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class PokemonGUI {
@@ -22,6 +25,7 @@ public class PokemonGUI {
     static Pokemons pok = new Pokemons();
     static PokemonsParser pokpars = new PokemonsParser();
 
+    static Logger log = Logger.getLogger(PokemonGUI.class.getName());
 
     public static void createAndShowGUI() {
 
@@ -36,12 +40,21 @@ public class PokemonGUI {
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                        jl1.setText("ID: " + pok.getPokeID());
-                        jl2.setText("Name: " + pok.getPokeName());
-                        jl3.setText("Type: " + pok.getPokeType());
-                        jl4.setText("Ability: " + pok.getPokeAbilityName());
-                        jl5.setText("Ability description: " + pok.getPokeAbilityDesricption());
-                        pok.PrintAll();
+
+                        if(pokpars.DataIsOk) {
+                            jl1.setText("ID: " + pok.getPokeID());
+                            jl2.setText("Name: " + pok.getPokeName());
+                            jl3.setText("Type: " + pok.getPokeType());
+                            jl4.setText("Ability: " + pok.getPokeAbilityName());
+                            jl5.setText("Ability description: " + pok.getPokeAbilityDesricption());
+                            //pok.PrintAll();
+                        }else{
+                            jl1.setText("Cannot find this pokemon");
+                            jl2.setText("");
+                            jl3.setText("");
+                            jl4.setText("");
+                            jl5.setText("");
+                        }
                         break;
                 }
             }
@@ -80,6 +93,14 @@ public class PokemonGUI {
         jf.pack();
         jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        jf.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                log.info("Stop application");
+                System.exit(0);
+            }
+        });
 
     }
 }

@@ -1,0 +1,6 @@
+[main] INFO  PokemonMain  - Start application
+[AWT-EventQueue-0] INFO  PokemonsParser  - User try to search Pokemon/ID: hello
+[AWT-EventQueue-0] ERROR PokemonsParser  - Cannot find this pokemon in database, Pokemon/ID: hello
+[AWT-EventQueue-0] INFO  PokemonsParser  - User try to search Pokemon/ID: pidgey
+[AWT-EventQueue-0] INFO  PokemonsParser  - User enter a properly name of pokemon: pidgey
+[AWT-EventQueue-0] INFO  PokemonGUI  - Stop application
